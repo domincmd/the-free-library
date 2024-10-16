@@ -64,6 +64,14 @@ app.post("/search", (req, res) => {
     res.send({ status: true, message: "done successfully", result: result });
 });
 
+app.post("/view", (req, res) => {
+    const id = req.body.id
+
+    console.log(id)
+    const book = data[id]
+    res.sendFile({book: book})
+})
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

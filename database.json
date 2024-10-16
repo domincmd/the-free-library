@@ -3,5 +3,10 @@
         "name": "example",
         "tags": ["1", "2", "3"],
         "content": "something"
+    },
+    {
+        "name": "example2",
+        "tags": ["2", "3", "4"],
+        "content": "something"
     }
 ]
