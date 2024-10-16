@@ -64,12 +64,9 @@ function displaySearchResults(results) {
         resultButton.classList.add(i)
         
         resultButton.addEventListener("click", e => {
-            fetchData("/view", "POST", { id: resultButton.classList[1]})
-                .then(data => {
-                    console.log(data)
-
-                });
-        })
+            window.location.href = `/view?id=${resultButton.classList[1]}`;  // Redirect to the view route with id as a query parameter
+        });
+        
         
 
         resultDiv.appendChild(resultTitle)

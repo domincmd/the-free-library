@@ -10,6 +10,8 @@ const app = express();
 const jsonData = fs.readFileSync(path.join(__dirname, "/database.json"), 'utf-8');
 const data = JSON.parse(jsonData);
 
+app.set('view engine', 'ejs');
+
 // Search function: allows searching by name and tags
 function search(name, tags) {
     let results = [];
@@ -68,13 +70,19 @@ app.post("/search", (req, res) => {
     res.send({ status: true, message: "done successfully", result: result });
 });
 
-app.post("/view", (req, res) => {
-    const id = req.body.id
 
-    console.log(id)
-    const book = data[id]
-    res.send(book)
-})
+app.get('/view', (req, res) => {
+    const id = req.query.id;  // Use req.query instead of req.body for GET requests
+
+    const book = data[id];  // Retrieve the book using the id from the query string
+    if (book) {
+        res.render('view', { book });  // Pass the book object to the EJS view
+    } else {
+        res.status(404).send('Book not found');
+    }
+});
+
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
