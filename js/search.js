@@ -47,7 +47,7 @@ function displaySearchResults(results) {
         const resultDiv = document.createElement("div")
         resultDiv.classList.add("result")
 
-        const resultTitle = document.createElement("a")
+        const resultTitle = document.createElement("h2")
         resultTitle.textContent = result.name
         
 

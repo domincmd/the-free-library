@@ -56,6 +56,10 @@ app.get("/js/view.js", (req, res) => {
     res.sendFile(path.join(__dirname, "js", "view.js"));
 });
 
+app.get("/css/styles.css", (req, res) => {
+    res.sendFile(path.join(__dirname, "css", "styles.css"))
+})
+
 // POST /search route to handle search requests
 app.post("/search", (req, res) => {
     const { name, tags } = req.body;  // Extract name and tags from request body
@@ -69,7 +73,7 @@ app.post("/view", (req, res) => {
 
     console.log(id)
     const book = data[id]
-    res.sendFile({book: book})
+    res.send(book)
 })
 
 app.listen(PORT, () => {
