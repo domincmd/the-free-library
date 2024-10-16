@@ -7,11 +7,13 @@
 </head>
 <body>
     <h1>The free library</h1>
-    <form action="/search" method="post">
+    <div class="search-container">    
         <h1>Search in the free library</h1>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" placeholder="Write here...">
-        <input type="submit">
-    </form>
+        <span>Name: </span><br>
+        <input type="text" class="name" name="name" placeholder="Write here..."><br>
+        <textarea name="tags" class="tags" placeholder="Tags here, separated by enters"></textarea>
+        <button onclick="search()">Search</button>
+    </div>
 </body>
+<script src="/js/search.js"></script>
 </html>
