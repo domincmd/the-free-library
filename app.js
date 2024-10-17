@@ -40,6 +40,16 @@ function search(name, tags) {
     return results;
 }
 
+function updateDatabase() {
+    fs.writeFile(path.join(__dirname, "database.json"), JSON.stringify(data, null, 2), (err) => {
+        if (err) {
+            res.json({result: false, status: err})
+            return;
+        }
+        res.json({result: true, status: "completed successfully"})
+    });
+}
+
 // Middleware to parse JSON request bodies
 app.use(bodyParser.json()); // Parse application/json
 
@@ -70,6 +80,13 @@ app.post("/search", (req, res) => {
     res.send({ status: true, message: "done successfully", result: result });
 });
 
+
+
+
+app.post("/create", (req, res) => {
+    data.push(req.body)
+    updateDatabase()
+});
 
 app.get('/view', (req, res) => {
     const id = req.query.id;  // Use req.query instead of req.body for GET requests
