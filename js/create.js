@@ -1,4 +1,6 @@
 const formContainer = document.querySelector(".form-container")
+const submitButton = formContainer.querySelector("button")
+
 
 
 function fetchData(url, method, body = null) {
@@ -21,9 +23,9 @@ function fetchData(url, method, body = null) {
 }
 
 function submitStoryCreation() {
-    const title = formContainer.getElementById("title").value
-    const tags = formContainer.getElementById("tags").textContent.split("\n")
-    const content = formContainer.getElementById("content").textContent;
+    const title = document.querySelector(".title").value
+    const tags = document.querySelector(".tags").value.split("\n")
+    const content = document.querySelector(".content").value;
 
     const book = {title: title, tags: tags, content: content}
     fetchData("/create", "POST", book)
@@ -39,3 +41,9 @@ function submitStoryCreation() {
         });
 
 }
+
+
+submitButton.addEventListener("click", e => {
+    console.log("I exist")
+    //submitStoryCreation()
+});

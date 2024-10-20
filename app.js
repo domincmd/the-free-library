@@ -22,8 +22,8 @@ function search(name, tags) {
 
     // Iterate through the books to search for matching names and tags
     data.forEach(book => {
-        const bookName = book.name.toLowerCase();
-        const bookTags = book.tags.map(tag => tag.toLowerCase());
+        const bookName = book["name"].toLowerCase();
+        const bookTags = book["tags"].map(tag => tag.toLowerCase());
 
         // Match by name if name is provided and matches part of the book name
         const nameMatch = lowerName ? bookName.includes(lowerName) : true;
@@ -40,13 +40,13 @@ function search(name, tags) {
     return results;
 }
 
-function updateDatabase() {
+function updateDatabase(res) {
     fs.writeFile(path.join(__dirname, "database.json"), JSON.stringify(data, null, 2), (err) => {
         if (err) {
-            res.json({result: false, status: err})
-            return;
+            return {result: false, status: err}
+            
         }
-        res.json({result: true, status: "completed successfully"})
+        return {result: true, status: "completed successfully"};
     });
 }
 
@@ -68,6 +68,10 @@ app.get("/js/view.js", (req, res) => {
     res.sendFile(path.join(__dirname, "js", "view.js"));
 });
 
+app.get("/js/create.js", (req, res) => {
+    res.sendFile(path.join(__dirname, "js", "create.js"));
+});
+
 app.get("/css/styles.css", (req, res) => {
     res.sendFile(path.join(__dirname, "css", "styles.css"))
 })
@@ -80,12 +84,21 @@ app.post("/search", (req, res) => {
     res.send({ status: true, message: "done successfully", result: result });
 });
 
-
+app.get("/create-book", (req, res) => {
+    res.sendFile(path.join(__dirname, "html", "create.html"))
+})
 
 
 app.post("/create", (req, res) => {
+    console.log(req.body)
     data.push(req.body)
-    updateDatabase()
+    const err = updateDatabase()
+    if (err) {
+        res.send({status: false, message: err})
+    }else{
+        res.send({status: true, message: "done"})
+    }
+    
 });
 
 app.get('/view', (req, res) => {
